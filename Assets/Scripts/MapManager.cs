@@ -17,10 +17,13 @@ public class MapManager : MonoBehaviour
     [SerializeField] public int mineCount;
 
 
-    private int[,] map;
+    private int[,]  map;
+    private bool[,] revealed;
 
     private void OnEnable()
     {
+        revealed = new bool[width, height];
+
         inputManager.OnTileReveal += HandleTileReveal;
         inputManager.OnTileMark += HandleTileMark;
     }
@@ -44,6 +47,47 @@ public class MapManager : MonoBehaviour
         if (map == null)
             map = MapGenerator.Generate(width, height, mineCount, position.x, position.y);
 
-        Debug.Log(map[position.x, position.y]);
+        if (map[position.x, position.y] == -1)
+        {
+            tilemap.SetTile(position + Vector3Int.back, backgroundTile);
+            tilemap.SetTile(position, mineTile);
+            Debug.Break(); // Game lost
+
+            return;
+        }
+
+        Reveal(position);
+    }
+
+    private void Reveal(Vector3Int position)
+    {
+        if (position.x < 0 || position.y < 0 || position.x >= width || position.y >= height)
+            return;
+
+        if (revealed[position.x, position.y])
+            return;
+
+        revealed[position.x, position.y] = true;
+        tilemap.SetTile(position + Vector3Int.back, backgroundTile);
+
+        if (map[position.x, position.y] > 0)
+        {
+            tilemap.SetTile(position, numberTiles[map[position.x, position.y] - 1]);
+
+            return;
+        }
+
+        tilemap.SetTile(position, null);
+
+        for (int dy = -1; dy <= 1; dy++)
+        {
+            for (int dx = -1; dx <= 1; dx++)
+            {
+                if (dx == 0 && dy == 0)
+                    continue;
+
+                Reveal(new Vector3Int(position.x + dx, position.y + dy, 0));
+            }
+        }
     }
 }
