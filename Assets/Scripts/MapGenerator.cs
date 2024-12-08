@@ -14,7 +14,7 @@ public static class MapGenerator
             int x = Random.Range(0, width);
             int y = Random.Range(0, height);
 
-            if (x > startX - 1 && x < startX + 1 || y > startY - 1 && y < startY + 1 || grid[x, y] == -1)
+            if (x >= startX - 1 && x <= startX + 1 || y >= startY - 1 && y <= startY + 1 || grid[x, y] == -1)
                 continue;
 
             grid[x, y] = -1;
