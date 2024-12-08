@@ -28,8 +28,6 @@ public class MapManager : MonoBehaviour
     private void Start()
     {
         tilemap.ClearAllTiles();
-        tilemap.origin = Vector3Int.zero;
-        tilemap.size = new Vector3Int(width, height);
         tilemap.BoxFill(new Vector3Int(width - 1, height - 1, 0), hiddenTile, 0, 0, width - 1, height - 1);
     }
 
