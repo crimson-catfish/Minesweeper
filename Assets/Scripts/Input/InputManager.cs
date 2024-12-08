@@ -26,7 +26,7 @@ public class InputManager : MonoBehaviour
     }
 
     public Action<Vector3Int> OnTileReveal;
-    public Action<Vector3Int> OnTileMarked;
+    public Action<Vector3Int> OnTileMark;
 
 
     private void SetGridActions()
@@ -56,7 +56,7 @@ public class InputManager : MonoBehaviour
             return;
 
         Vector3Int gridPosition = PixelsToGridPosition(positionPixels);
-        OnTileMarked(gridPosition);
+        OnTileMark(gridPosition);
     }
 
 
