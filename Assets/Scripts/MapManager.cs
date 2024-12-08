@@ -1,12 +1,16 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 public class MapManager : MonoBehaviour
 {
-    [SerializeField]                               private InputManager inputManager;
-    [FormerlySerializedAs("grid"), SerializeField] private Tilemap      tilemap;
+    [SerializeField] private InputManager inputManager;
+    [SerializeField] private Tilemap      tilemap;
 
+    [SerializeField] private Tile   backgroundTile;
+    [SerializeField] private Tile   hiddenTile;
+    [SerializeField] private Tile   mineTile;
+    [SerializeField] private Tile   markTile;
+    [SerializeField] private Tile[] numberTiles;
 
     [SerializeField] public int width;
     [SerializeField] public int height;
@@ -19,6 +23,14 @@ public class MapManager : MonoBehaviour
     {
         inputManager.OnTileReveal += HandleTileReveal;
         inputManager.OnTileMark += HandleTileMark;
+    }
+
+    private void Start()
+    {
+        tilemap.ClearAllTiles();
+        tilemap.origin = Vector3Int.zero;
+        tilemap.size = new Vector3Int(width, height);
+        tilemap.BoxFill(new Vector3Int(width - 1, height - 1, 0), hiddenTile, 0, 0, width - 1, height - 1);
     }
 
     private void HandleTileMark(Vector3Int position)
