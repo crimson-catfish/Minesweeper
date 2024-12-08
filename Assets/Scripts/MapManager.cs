@@ -35,7 +35,10 @@ public class MapManager : MonoBehaviour
 
     private void HandleTileMark(Vector3Int position)
     {
-        Debug.Log(position);
+        if (tilemap.GetTile(position + Vector3Int.forward) == markTile)
+            tilemap.SetTile(position + Vector3Int.forward, null);
+        else
+            tilemap.SetTile(position + Vector3Int.forward, markTile);
     }
 
     private void HandleTileReveal(Vector3Int position)
