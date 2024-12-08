@@ -1,0 +1,113 @@
+{
+    "name": "Controls",
+    "maps": [
+        {
+            "name": "Grid",
+            "id": "5b1f9f2a-994f-4c96-81b7-e4146a135e16",
+            "actions": [
+                {
+                    "name": "Position",
+                    "type": "Value",
+                    "id": "f1b52cfe-4686-464c-917c-b802cbf3d648",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Reveal",
+                    "type": "Button",
+                    "id": "ef8ee1a5-1312-418f-abc3-a9b8a7b51d5b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Mark",
+                    "type": "Button",
+                    "id": "4e66da66-bf94-41e4-b963-63ae23a300e7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "6a207dfb-d68d-478e-84de-4e58db346c4d",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Main",
+                    "action": "Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2b396416-a91a-49f3-81f6-f7e65be41d88",
+                    "path": "<Touchscreen>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Main",
+                    "action": "Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0b6c7372-2483-4f2a-8763-537b576f742d",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reveal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "399ab4bd-8592-4706-be02-c015d1464187",
+                    "path": "<Touchscreen>/primaryTouch/tap",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reveal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bd41ce12-c179-4149-b488-79e6c1bba969",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Mark",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "67f3de57-4cac-4ba2-9943-850bc1d022ac",
+                    "path": "<Touchscreen>/primaryTouch/tap",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Mark",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Main",
+            "bindingGroup": "Main",
+            "devices": []
+        }
+    ]
+}
