@@ -2624,6 +2624,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1154728479}
   - component: {fileID: 1154728478}
+  - component: {fileID: 1154728480}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -2659,6 +2660,20 @@ Transform:
   - {fileID: 17058514}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1154728480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154728477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 576e157de7e245f590ee03cbcab02bab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputManager: {fileID: 1953836017}
+  grid: {fileID: 1154728478}
 --- !u!1 &1953836016
 GameObject:
   m_ObjectHideFlags: 0
@@ -2688,7 +2703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71b28286b6b0c38f68e6863b99224a01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasManager: {fileID: 0}
+  canvasManager: {fileID: 11400000, guid: 3dab433ad95c7aed9a1067b9bb2dcd25, type: 2}
   tilemap: {fileID: 17058516}
 --- !u!4 &1953836018
 Transform:
