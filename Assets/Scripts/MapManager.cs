@@ -51,7 +51,6 @@ public class MapManager : MonoBehaviour
         {
             tilemap.SetTile(position + Vector3Int.back, backgroundTile);
             tilemap.SetTile(position, mineTile);
-            Debug.Break(); // Game lost
 
             return;
         }
