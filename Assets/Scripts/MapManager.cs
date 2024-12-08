@@ -7,9 +7,10 @@ public class MapManager : MonoBehaviour
     [SerializeField]                               private InputManager inputManager;
     [FormerlySerializedAs("grid"), SerializeField] private Tilemap      tilemap;
 
-    [SerializeField] private int width;
-    [SerializeField] private int height;
-    [SerializeField] private int mineCount;
+
+    [SerializeField] public int width;
+    [SerializeField] public int height;
+    [SerializeField] public int mineCount;
 
 
     private int[,] map;
