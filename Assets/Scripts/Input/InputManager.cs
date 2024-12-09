@@ -10,6 +10,8 @@ public class InputManager : MonoBehaviour
 {
     [SerializeField] private CanvasManager canvasManager;
     [SerializeField] private Tilemap       tilemap;
+    [SerializeField] private MapManager    mapManager;
+
 
     private Controls Controls { set; get; }
 
@@ -23,6 +25,8 @@ public class InputManager : MonoBehaviour
         camera = Camera.main;
 
         SetGridActions();
+
+        mapManager.OnMinePressed += Controls.Grid.Disable;
     }
 
     public Action<Vector3Int> OnTileReveal;

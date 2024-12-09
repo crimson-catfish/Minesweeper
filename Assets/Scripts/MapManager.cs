@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Random = UnityEngine.Random;
 
 public class MapManager : MonoBehaviour
 {
@@ -20,6 +22,9 @@ public class MapManager : MonoBehaviour
     [SerializeField] public int height;
     [SerializeField] public int mineCount;
 
+    public Action OnMinePressed;
+    public Action OnGameOver;
+    public Action OnGameWin;
 
     private int[,]       map;
     private TileState[,] tileStates;
@@ -66,6 +71,7 @@ public class MapManager : MonoBehaviour
 
         if (map[position.x, position.y] == -1)
         {
+            OnMinePressed?.Invoke();
             RevealMines(position);
 
             return;
@@ -148,5 +154,7 @@ public class MapManager : MonoBehaviour
 
             yield return new WaitForSeconds(explotionTime * mines.Count * mineCount);
         }
+
+        OnGameOver?.Invoke();
     }
 }

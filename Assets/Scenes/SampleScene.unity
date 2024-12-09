@@ -751,6 +751,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasManager: {fileID: 11400000, guid: 3dab433ad95c7aed9a1067b9bb2dcd25, type: 2}
   tilemap: {fileID: 17058516}
+  mapManager: {fileID: 17058517}
 --- !u!4 &1953836018
 Transform:
   m_ObjectHideFlags: 0
