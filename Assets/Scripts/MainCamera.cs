@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.U2D;
 
-[RequireComponent(typeof(Camera))]
+[RequireComponent(typeof(Camera), typeof(PixelPerfectCamera))]
 public class MainCamera : MonoBehaviour
 {
     [SerializeField] private MapManager mapManager;
@@ -10,6 +11,8 @@ public class MainCamera : MonoBehaviour
         this.transform.position =
             new Vector3((float)mapManager.width / 2, (float)mapManager.height / 2, transform.position.z);
 
-        GetComponent<Camera>().orthographicSize = (float)mapManager.height / 2;
+        PixelPerfectCamera pixelPerfectCamera = GetComponent<PixelPerfectCamera>();
+        pixelPerfectCamera.refResolutionX = mapManager.width * pixelPerfectCamera.assetsPPU;
+        pixelPerfectCamera.refResolutionY = mapManager.height * pixelPerfectCamera.assetsPPU;
     }
 }
