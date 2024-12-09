@@ -17,12 +17,12 @@ public class MapManager : MonoBehaviour
     [SerializeField] public int mineCount;
 
 
-    private int[,]  map;
-    private bool[,] revealed;
+    private int[,]       map;
+    private TileState[,] tileStates;
 
     private void OnEnable()
     {
-        revealed = new bool[width, height];
+        tileStates = new TileState[width, height];
 
         inputManager.OnTileReveal += HandleTileReveal;
         inputManager.OnTileMark += HandleTileMark;
@@ -36,16 +36,28 @@ public class MapManager : MonoBehaviour
 
     private void HandleTileMark(Vector3Int position)
     {
-        if (tilemap.GetTile(position + Vector3Int.forward) == markTile)
-            tilemap.SetTile(position + Vector3Int.forward, null);
-        else
-            tilemap.SetTile(position + Vector3Int.forward, markTile);
+        switch (tileStates[position.x, position.y])
+        {
+            case TileState.Hidden:
+                tileStates[position.x, position.y] = TileState.Marked;
+                tilemap.SetTile(position + Vector3Int.forward, markTile);
+
+                break;
+            case TileState.Marked:
+                tileStates[position.x, position.y] = TileState.Hidden;
+                tilemap.SetTile(position + Vector3Int.forward, null);
+
+                break;
+        }
     }
 
     private void HandleTileReveal(Vector3Int position)
     {
         if (map == null)
             map = MapGenerator.Generate(width, height, mineCount, position.x, position.y);
+
+        if (tileStates[position.x, position.y] != TileState.Hidden)
+            return;
 
         if (map[position.x, position.y] == -1)
         {
@@ -60,13 +72,17 @@ public class MapManager : MonoBehaviour
 
     private void Reveal(Vector3Int position)
     {
-        if (position.x < 0 || position.y < 0 || position.x >= width || position.y >= height)
+        if (position.x < 0 ||
+            position.y < 0 ||
+            position.x >= width ||
+            position.y >= height ||
+            tileStates[position.x, position.y] == TileState.Revealed)
             return;
 
-        if (revealed[position.x, position.y])
-            return;
+        if (tileStates[position.x, position.y] == TileState.Marked)
+            tilemap.SetTile(position + Vector3Int.forward, null);
 
-        revealed[position.x, position.y] = true;
+        tileStates[position.x, position.y] = TileState.Revealed;
         tilemap.SetTile(position + Vector3Int.back, backgroundTile);
 
         if (map[position.x, position.y] > 0)
