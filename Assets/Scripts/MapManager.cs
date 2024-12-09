@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -11,6 +13,8 @@ public class MapManager : MonoBehaviour
     [SerializeField] private Tile   mineTile;
     [SerializeField] private Tile   markTile;
     [SerializeField] private Tile[] numberTiles;
+
+    [SerializeField] private float explotionTime;
 
     [SerializeField] public int width;
     [SerializeField] public int height;
@@ -59,10 +63,10 @@ public class MapManager : MonoBehaviour
         if (tileStates[position.x, position.y] != TileState.Hidden)
             return;
 
+
         if (map[position.x, position.y] == -1)
         {
-            tilemap.SetTile(position + Vector3Int.back, backgroundTile);
-            tilemap.SetTile(position, mineTile);
+            RevealMines(position);
 
             return;
         }
@@ -103,6 +107,46 @@ public class MapManager : MonoBehaviour
 
                 Reveal(new Vector3Int(position.x + dx, position.y + dy, 0));
             }
+        }
+    }
+
+    private void RevealMines(Vector3Int position)
+    {
+        tileStates[position.x, position.y] = TileState.Revealed;
+        tilemap.SetTile(position + Vector3Int.back, backgroundTile);
+        tilemap.SetTile(position, mineTile);
+
+
+        List<Vector2Int> mines = new();
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                if (map[x, y] == -1 && tileStates[x, y] != TileState.Revealed)
+                    mines.Add(new Vector2Int(x, y));
+            }
+        }
+
+        StartCoroutine(RevealMinesCoroutine(mines));
+    }
+
+    private IEnumerator RevealMinesCoroutine(List<Vector2Int> mines)
+    {
+        while (mines.Count > 0)
+        {
+            Vector2Int mine = mines[Random.Range(0, mines.Count)];
+
+            if (tileStates[mine.x, mine.y] == TileState.Marked)
+                tilemap.SetTile(new Vector3Int(mine.x, mine.y, 1), null);
+
+            tilemap.SetTile(new Vector3Int(mine.x, mine.y, -1), backgroundTile);
+            tilemap.SetTile(new Vector3Int(mine.x, mine.y, 0), mineTile);
+            tileStates[mine.x, mine.y] = TileState.Revealed;
+
+            mines.Remove(mine);
+
+            yield return new WaitForSeconds(explotionTime * mines.Count * mineCount);
         }
     }
 }
