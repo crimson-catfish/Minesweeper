@@ -312,7 +312,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e5d408ff53899b1349caee0e35090fed, type: 2}
   explotionTime: 0.003
   width: 10
-  height: 10
+  height: 8
   mineCount: 10
 --- !u!1 &367370601
 GameObject:
@@ -529,6 +529,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapManager: {fileID: 17058517}
   gameOverImage: {fileID: 1849313547}
+  gameWinImage: {fileID: 1775413311}
 --- !u!4 &534836313
 Transform:
   m_ObjectHideFlags: 0
@@ -704,6 +705,7 @@ GameObject:
   - component: {fileID: 1775413310}
   - component: {fileID: 1775413312}
   - component: {fileID: 1775413311}
+  - component: {fileID: 1775413313}
   m_Layer: 5
   m_Name: Game Win
   m_TagString: Untagged
@@ -725,10 +727,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 616320018}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 99.983}
+  m_SizeDelta: {x: -173.3663, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1775413311
 MonoBehaviour:
@@ -743,14 +745,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 7109882136235136448, guid: 37957877f70697f378dbc691ca554baa, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -768,6 +770,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1775413309}
   m_CullTransparentMesh: 1
+--- !u!114 &1775413313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775413309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AspectMode: 1
+  m_AspectRatio: 3.8888888
 --- !u!1 &1828312824
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,6 +870,7 @@ GameObject:
   - component: {fileID: 1849313546}
   - component: {fileID: 1849313548}
   - component: {fileID: 1849313547}
+  - component: {fileID: 1849313549}
   m_Layer: 5
   m_Name: Game Over
   m_TagString: Untagged
@@ -877,8 +894,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 106}
-  m_SizeDelta: {x: -137.7206, y: -359.1864}
+  m_AnchoredPosition: {x: 0, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1849313547
 MonoBehaviour:
@@ -918,6 +935,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1849313545}
   m_CullTransparentMesh: 1
+--- !u!114 &1849313549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1849313545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AspectMode: 1
+  m_AspectRatio: 4.795867
 --- !u!1 &1953836016
 GameObject:
   m_ObjectHideFlags: 0

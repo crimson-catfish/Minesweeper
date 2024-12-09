@@ -28,10 +28,13 @@ public class MapManager : MonoBehaviour
 
     private int[,]       map;
     private TileState[,] tileStates;
+    private int          hiddenCount;
+    private int          markCount = 0;
 
     private void OnEnable()
     {
         tileStates = new TileState[width, height];
+        hiddenCount = width * height;
 
         inputManager.OnTileReveal += HandleTileReveal;
         inputManager.OnTileMark += HandleTileMark;
@@ -50,14 +53,20 @@ public class MapManager : MonoBehaviour
             case TileState.Hidden:
                 tileStates[position.x, position.y] = TileState.Marked;
                 tilemap.SetTile(position + Vector3Int.forward, markTile);
+                markCount++;
+                hiddenCount--;
 
                 break;
             case TileState.Marked:
                 tileStates[position.x, position.y] = TileState.Hidden;
                 tilemap.SetTile(position + Vector3Int.forward, null);
+                markCount--;
+                hiddenCount++;
 
                 break;
         }
+
+        CheckForWin();
     }
 
     private void HandleTileReveal(Vector3Int position)
@@ -90,7 +99,12 @@ public class MapManager : MonoBehaviour
             return;
 
         if (tileStates[position.x, position.y] == TileState.Marked)
+        {
             tilemap.SetTile(position + Vector3Int.forward, null);
+            markCount--;
+        }
+        else
+            hiddenCount--;
 
         tileStates[position.x, position.y] = TileState.Revealed;
         tilemap.SetTile(position + Vector3Int.back, backgroundTile);
@@ -114,6 +128,8 @@ public class MapManager : MonoBehaviour
                 Reveal(new Vector3Int(position.x + dx, position.y + dy, 0));
             }
         }
+
+        CheckForWin();
     }
 
     private void RevealMines(Vector3Int position)
@@ -144,7 +160,10 @@ public class MapManager : MonoBehaviour
             Vector2Int mine = mines[Random.Range(0, mines.Count)];
 
             if (tileStates[mine.x, mine.y] == TileState.Marked)
+            {
                 tilemap.SetTile(new Vector3Int(mine.x, mine.y, 1), null);
+                markCount--;
+            }
 
             tilemap.SetTile(new Vector3Int(mine.x, mine.y, -1), backgroundTile);
             tilemap.SetTile(new Vector3Int(mine.x, mine.y, 0), mineTile);
@@ -156,5 +175,11 @@ public class MapManager : MonoBehaviour
         }
 
         OnGameOver?.Invoke();
+    }
+
+    private void CheckForWin()
+    {
+        if (markCount == mineCount && hiddenCount == 0)
+            OnGameWin?.Invoke();
     }
 }

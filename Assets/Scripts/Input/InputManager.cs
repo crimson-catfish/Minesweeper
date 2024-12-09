@@ -27,6 +27,7 @@ public class InputManager : MonoBehaviour
         SetGridActions();
 
         mapManager.OnMinePressed += Controls.Grid.Disable;
+        mapManager.OnGameWin += Controls.Grid.Disable;
     }
 
     public Action<Vector3Int> OnTileReveal;

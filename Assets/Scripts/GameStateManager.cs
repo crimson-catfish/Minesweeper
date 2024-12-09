@@ -6,6 +6,7 @@ public class GameStateManager : MonoBehaviour
 {
     [SerializeField] private MapManager mapManager;
     [SerializeField] private Image      gameOverImage;
+    [SerializeField] private Image      gameWinImage;
 
 
     private void OnEnable()
@@ -23,6 +24,6 @@ public class GameStateManager : MonoBehaviour
 
     private void HandleGameWin()
     {
-        throw new NotImplementedException();
+        gameWinImage.enabled = true;
     }
 }
