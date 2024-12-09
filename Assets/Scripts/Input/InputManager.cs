@@ -44,8 +44,11 @@ public class InputManager : MonoBehaviour
         if (IsOverUI(positionPixels))
             return;
 
-        Vector3Int gridPosition = PixelsToGridPosition(positionPixels);
-        OnTileReveal(gridPosition);
+        Vector3 positionWorld = camera.ScreenToWorldPoint(positionPixels);
+        Vector3Int positionGrid = new((int)positionWorld.x, (int)positionWorld.y, 0);
+
+        if (tilemap.HasTile(positionGrid))
+            OnTileReveal(positionGrid);
     }
 
     private void HandleTileMark(InputAction.CallbackContext _)
@@ -55,16 +58,11 @@ public class InputManager : MonoBehaviour
         if (IsOverUI(positionPixels))
             return;
 
-        Vector3Int gridPosition = PixelsToGridPosition(positionPixels);
-        OnTileMark(gridPosition);
-    }
-
-
-    private Vector3Int PixelsToGridPosition(Vector2 positionPixels)
-    {
         Vector3 positionWorld = camera.ScreenToWorldPoint(positionPixels);
+        Vector3Int positionGrid = new((int)positionWorld.x, (int)positionWorld.y, 0);
 
-        return tilemap.WorldToCell(positionWorld);
+        if (tilemap.HasTile(positionGrid))
+            OnTileMark(positionGrid);
     }
 
     private bool IsOverUI(Vector2 point)
