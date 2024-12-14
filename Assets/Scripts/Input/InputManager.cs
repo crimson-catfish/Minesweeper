@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using RDG;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -58,6 +59,8 @@ public class InputManager : MonoBehaviour
 
     private void HandleTileMark(InputAction.CallbackContext _)
     {
+        Vibration.Vibrate(100);
+
         Vector2 positionPixels = Controls.Grid.Position.ReadValue<Vector2>();
 
         if (IsOverUI(positionPixels))
