@@ -28,8 +28,8 @@ public class MapManager : MonoBehaviour
 
     private int[,]       map;
     private TileState[,] tileStates;
+    private int          revealCount;
     private int          hiddenCount;
-    private int          markCount = 0;
 
     private void OnEnable()
     {
@@ -53,15 +53,11 @@ public class MapManager : MonoBehaviour
             case TileState.Hidden:
                 tileStates[position.x, position.y] = TileState.Marked;
                 tilemap.SetTile(position + Vector3Int.forward, markTile);
-                markCount++;
-                hiddenCount--;
 
                 break;
             case TileState.Marked:
                 tileStates[position.x, position.y] = TileState.Hidden;
                 tilemap.SetTile(position + Vector3Int.forward, null);
-                markCount--;
-                hiddenCount++;
 
                 break;
         }
@@ -87,6 +83,7 @@ public class MapManager : MonoBehaviour
         }
 
         Reveal(position);
+        CheckForWin();
     }
 
     private void Reveal(Vector3Int position)
@@ -101,7 +98,6 @@ public class MapManager : MonoBehaviour
         if (tileStates[position.x, position.y] == TileState.Marked)
         {
             tilemap.SetTile(position + Vector3Int.forward, null);
-            markCount--;
         }
         else
             hiddenCount--;
@@ -128,8 +124,6 @@ public class MapManager : MonoBehaviour
                 Reveal(new Vector3Int(position.x + dx, position.y + dy, 0));
             }
         }
-
-        CheckForWin();
     }
 
     private void RevealMines(Vector3Int position)
@@ -162,7 +156,6 @@ public class MapManager : MonoBehaviour
             if (tileStates[mine.x, mine.y] == TileState.Marked)
             {
                 tilemap.SetTile(new Vector3Int(mine.x, mine.y, 1), null);
-                markCount--;
             }
 
             tilemap.SetTile(new Vector3Int(mine.x, mine.y, -1), backgroundTile);
@@ -179,7 +172,7 @@ public class MapManager : MonoBehaviour
 
     private void CheckForWin()
     {
-        if (markCount == mineCount && hiddenCount == 0)
+        if (hiddenCount == mineCount)
             OnGameWin?.Invoke();
     }
 }
