@@ -34,8 +34,7 @@ public class InputManager : MonoBehaviour
     public Action<Vector3Int> OnTileReveal;
     public Action<Vector3Int> OnTileMark;
 
-
-    private void SetGridActions()
+    public void SetGridActions()
     {
         Controls.Grid.Enable();
 

@@ -6,13 +6,13 @@ public class MainCamera : MonoBehaviour
 {
     [SerializeField] private MapManager mapManager;
 
-    private void OnEnable()
+    public void SetUpCamera()
     {
         this.transform.position =
-            new Vector3((float)mapManager.width / 2, (float)mapManager.height / 2, transform.position.z);
+            new Vector3((float)mapManager.Width / 2, (float)mapManager.Height / 2, transform.position.z);
 
         PixelPerfectCamera pixelPerfectCamera = GetComponent<PixelPerfectCamera>();
-        pixelPerfectCamera.refResolutionX = mapManager.width * pixelPerfectCamera.assetsPPU;
-        pixelPerfectCamera.refResolutionY = mapManager.height * pixelPerfectCamera.assetsPPU;
+        pixelPerfectCamera.refResolutionX = mapManager.Width * pixelPerfectCamera.assetsPPU;
+        pixelPerfectCamera.refResolutionY = mapManager.Height * pixelPerfectCamera.assetsPPU;
     }
 }

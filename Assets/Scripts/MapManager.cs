@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.U2D;
 using Random = UnityEngine.Random;
 
 public class MapManager : MonoBehaviour
 {
     [SerializeField] private InputManager inputManager;
     [SerializeField] private Tilemap      tilemap;
+    [SerializeField] private MainCamera   camera;
+
 
     [SerializeField] private Tile   backgroundTile;
     [SerializeField] private Tile   hiddenTile;
@@ -18,9 +21,9 @@ public class MapManager : MonoBehaviour
 
     [SerializeField] private float explotionTime;
 
-    [SerializeField] public int width;
-    [SerializeField] public int height;
-    [SerializeField] public int mineCount;
+    public int Width     { private set; get; }
+    public int Height    { private set; get; }
+    public int MineCount { private set; get; }
 
     public Action OnMinePressed;
     public Action OnGameOver;
@@ -28,22 +31,25 @@ public class MapManager : MonoBehaviour
 
     private int[,]       map;
     private TileState[,] tileStates;
-    private int          revealCount;
     private int          hiddenCount;
 
-    private void OnEnable()
+    public void SetMap(int width, int height, int mineCount)
     {
-        tileStates = new TileState[width, height];
-        hiddenCount = width * height;
+        Width = width;
+        Height = height;
+        MineCount = mineCount;
+
+        map = null;
+
+        tileStates = new TileState[Width, Height];
+        hiddenCount = Width * Height;
+        tilemap.ClearAllTiles();
+        tilemap.BoxFill(new Vector3Int(Width - 1, Height - 1, 0), hiddenTile, 0, 0, Width - 1, Height - 1);
+
+        camera.SetUpCamera();
 
         inputManager.OnTileReveal += HandleTileReveal;
         inputManager.OnTileMark += HandleTileMark;
-    }
-
-    private void Start()
-    {
-        tilemap.ClearAllTiles();
-        tilemap.BoxFill(new Vector3Int(width - 1, height - 1, 0), hiddenTile, 0, 0, width - 1, height - 1);
     }
 
     private void HandleTileMark(Vector3Int position)
@@ -68,7 +74,7 @@ public class MapManager : MonoBehaviour
     private void HandleTileReveal(Vector3Int position)
     {
         if (map == null)
-            map = MapGenerator.Generate(width, height, mineCount, position.x, position.y);
+            map = MapGenerator.Generate(Width, Height, MineCount, position.x, position.y);
 
         if (tileStates[position.x, position.y] != TileState.Hidden)
             return;
@@ -90,8 +96,8 @@ public class MapManager : MonoBehaviour
     {
         if (position.x < 0 ||
             position.y < 0 ||
-            position.x >= width ||
-            position.y >= height ||
+            position.x >= Width ||
+            position.y >= Height ||
             tileStates[position.x, position.y] == TileState.Revealed)
             return;
 
@@ -135,9 +141,9 @@ public class MapManager : MonoBehaviour
 
         List<Vector2Int> mines = new();
 
-        for (int y = 0; y < height; y++)
+        for (int y = 0; y < Height; y++)
         {
-            for (int x = 0; x < width; x++)
+            for (int x = 0; x < Width; x++)
             {
                 if (map[x, y] == -1 && tileStates[x, y] != TileState.Revealed)
                     mines.Add(new Vector2Int(x, y));
@@ -164,7 +170,7 @@ public class MapManager : MonoBehaviour
 
             mines.Remove(mine);
 
-            yield return new WaitForSeconds(explotionTime * mines.Count * mineCount);
+            yield return new WaitForSeconds(explotionTime * mines.Count * MineCount);
         }
 
         OnGameOver?.Invoke();
@@ -172,7 +178,7 @@ public class MapManager : MonoBehaviour
 
     private void CheckForWin()
     {
-        if (hiddenCount == mineCount)
+        if (hiddenCount == MineCount)
             OnGameWin?.Invoke();
     }
 }
