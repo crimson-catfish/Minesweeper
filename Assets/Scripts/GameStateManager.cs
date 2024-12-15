@@ -4,7 +4,9 @@ using UnityEngine.UI;
 
 public class GameStateManager : MonoBehaviour
 {
-    [SerializeField] private MapManager mapManager;
+    [SerializeField] private MapManager   mapManager;
+    [SerializeField] private InputManager inputManager;
+
 
     [SerializeField] private Image          background;
     [SerializeField] private GameObject     difficultyPanel;
@@ -21,6 +23,9 @@ public class GameStateManager : MonoBehaviour
         int height = int.Parse(heightInputField.text);
         int mineCount = int.Parse(minesInputField.text);
 
+        if (mineCount > width * height / 2 - 1)
+            return;
+
         mapManager.SetMap(width, height, mineCount);
 
         background.enabled = false;
@@ -28,6 +33,7 @@ public class GameStateManager : MonoBehaviour
         gameWinImage.enabled = false;
         difficultyPanel.SetActive(false);
 
+        inputManager.SetGridActions();
         mapManager.OnGameOver += HandleGameOver;
         mapManager.OnGameWin += HandleGameWin;
     }
