@@ -53,13 +53,11 @@ public class InputManager : MonoBehaviour
         Vector3Int positionGrid = new((int)positionWorld.x, (int)positionWorld.y, 0);
 
         if (tilemap.HasTile(positionGrid))
-            OnTileReveal(positionGrid);
+            OnTileReveal?.Invoke(positionGrid);
     }
 
     private void HandleTileMark(InputAction.CallbackContext _)
     {
-        Vibration.Vibrate(100);
-
         Vector2 positionPixels = Controls.Grid.Position.ReadValue<Vector2>();
 
         if (IsOverUI(positionPixels))
@@ -69,7 +67,7 @@ public class InputManager : MonoBehaviour
         Vector3Int positionGrid = new((int)positionWorld.x, (int)positionWorld.y, 0);
 
         if (tilemap.HasTile(positionGrid))
-            OnTileMark(positionGrid);
+            OnTileMark?.Invoke(positionGrid);
     }
 
     private bool IsOverUI(Vector2 point)

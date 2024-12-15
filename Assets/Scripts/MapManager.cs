@@ -33,6 +33,12 @@ public class MapManager : MonoBehaviour
     private TileState[,] tileStates;
     private int          hiddenCount;
 
+    private void OnEnable()
+    {
+        inputManager.OnTileReveal += HandleTileReveal;
+        inputManager.OnTileMark += HandleTileMark;
+    }
+
     public void SetMap(int width, int height, int mineCount)
     {
         Width = width;
@@ -47,9 +53,6 @@ public class MapManager : MonoBehaviour
         tilemap.BoxFill(new Vector3Int(Width - 1, Height - 1, 0), hiddenTile, 0, 0, Width - 1, Height - 1);
 
         camera.SetUpCamera();
-
-        inputManager.OnTileReveal += HandleTileReveal;
-        inputManager.OnTileMark += HandleTileMark;
     }
 
     private void HandleTileMark(Vector3Int position)
