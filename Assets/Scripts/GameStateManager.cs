@@ -6,6 +6,7 @@ public class GameStateManager : MonoBehaviour
 {
     [SerializeField] private MapManager mapManager;
 
+    [SerializeField] private Image          background;
     [SerializeField] private GameObject     difficultyPanel;
     [SerializeField] private TMP_InputField widthInputField;
     [SerializeField] private TMP_InputField heightInputField;
@@ -22,6 +23,7 @@ public class GameStateManager : MonoBehaviour
 
         mapManager.SetMap(width, height, mineCount);
 
+        background.enabled = false;
         gameOverImage.enabled = false;
         gameWinImage.enabled = false;
         difficultyPanel.SetActive(false);
@@ -32,12 +34,14 @@ public class GameStateManager : MonoBehaviour
 
     private void HandleGameOver()
     {
+        background.enabled = true;
         gameOverImage.enabled = true;
         difficultyPanel.SetActive(true);
     }
 
     private void HandleGameWin()
     {
+        background.enabled = true;
         gameWinImage.enabled = true;
         difficultyPanel.SetActive(true);
     }
