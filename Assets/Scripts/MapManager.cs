@@ -173,7 +173,7 @@ public class MapManager : MonoBehaviour
 
             mines.Remove(mine);
 
-            yield return new WaitForSeconds(explotionTime * mines.Count * MineCount);
+            yield return new WaitForSeconds(explotionTime * mines.Count / MineCount);
         }
 
         OnGameOver?.Invoke();
