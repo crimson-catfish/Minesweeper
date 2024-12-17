@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
-// Dont forget to add "using RDG;" to the top of your script!
 namespace RDG
 {
     /// <summary>
